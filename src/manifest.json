@@ -1,21 +1,40 @@
 {
-   "name": "Bling",
-   "browser_action": {
-      "default_icon": "icon.png"
-   },
-   "chrome_url_overrides":
-	 {
-		"newtab": "new.html"
-   },
-   "permissions": ["https://www.bing.com/*"],
-   "web_accessible_resources": ["new.html"],
-   "homepage_url": "https://linkedin.com/in/seanschang",
-   "description": "",
-   "manifest_version": 2,
-   "version": "0.0.0.1",
-   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
-   "icons": {
-      "48": "icon.png"
-   }
-}
+  "name": "Bling",
+  "version": "0.0.0.4",
+  "description": "",
+  "manifest_version": 3,
 
+  "action": {
+    "default_icon": "icon.png"
+  },
+
+  "chrome_url_overrides": {
+    "newtab": "new.html"
+  },
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "permissions": ["activeTab"],
+
+  "host_permissions": [
+    "https://www.bing.com/*",
+    "https://www.google-analytics.com/*"
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["new.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
+  "icons": {
+    "48": "icon.png"
+  },
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}

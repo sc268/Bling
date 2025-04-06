@@ -1,17 +1,21 @@
+// Fetch background image from Bing
+chrome.runtime.sendMessage({ type: 'fetch-bing' }, (response) => {
+  if (response?.error) {
+    console.error("Failed to fetch Bing image:", response.error);
+    return;
+  }
 
-    var url = `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=30&mkt`;
-    xhttp = new XMLHttpRequest();    
-    xhttp.open("GET", url, true);
-    xhttp.onload = function(){
-        var res =  JSON.parse(xhttp.responseText);
-        var max = Object.keys(res.images).length;
-        var i = Math.floor(Math.random() * (max));
-        var imageUrl = "https://bing.com" + res.images[i].url;
-        var body = document.getElementsByTagName('body')[0];
-        body.style.backgroundImage = 'url(' + imageUrl + ')'; 
-        console.log(max, i, xhttp.responseText, imageUrl)
-    }
-    xhttp.send();
+  const pics = response;
+  const max = pics.images.length;
+  const pic = pics.images[Math.floor(Math.random() * max)];
 
+  document.body.style.backgroundImage = `url(https://bing.com${pic.url})`;
 
- 
+  const copyrightEl = document.getElementById("copyright");
+  if (copyrightEl) {
+    copyrightEl.innerHTML += `<a href="${pic.copyrightlink}">${pic.copyright}</a>`;
+  }
+});
+
+// Track page view
+chrome.runtime.sendMessage({ type: 'track-ga' });

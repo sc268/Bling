@@ -1,0 +1,1 @@
+The chrome extension developer does not collect user data at all.
